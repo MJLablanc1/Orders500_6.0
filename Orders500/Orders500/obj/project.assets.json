@@ -1861,28 +1861,20 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\madmi\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
-    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {}
+    "C:\\Users\\ianbe\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\madmi\\Desktop\\ISIT322\\Orders500\\Orders500_6.0\\Orders500\\Orders500\\Orders500.csproj",
+      "projectUniqueName": "C:\\Users\\ianbe\\Documents\\git-repos\\Orders500_6.0\\Orders500\\Orders500\\Orders500.csproj",
       "projectName": "Orders500",
-      "projectPath": "C:\\Users\\madmi\\Desktop\\ISIT322\\Orders500\\Orders500_6.0\\Orders500\\Orders500\\Orders500.csproj",
-      "packagesPath": "C:\\Users\\madmi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\madmi\\Desktop\\ISIT322\\Orders500\\Orders500_6.0\\Orders500\\Orders500\\obj\\",
+      "projectPath": "C:\\Users\\ianbe\\Documents\\git-repos\\Orders500_6.0\\Orders500\\Orders500\\Orders500.csproj",
+      "packagesPath": "C:\\Users\\ianbe\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\ianbe\\Documents\\git-repos\\Orders500_6.0\\Orders500\\Orders500\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-        "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-      ],
       "configFilePaths": [
-        "C:\\Users\\madmi\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        "C:\\Users\\ianbe\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net6.0"

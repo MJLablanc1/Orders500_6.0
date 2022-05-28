@@ -20,7 +20,7 @@ namespace Orders500.Controllers
             {
                 OrderId = x.OrdersId,
                 StoreId = x.StoreId,
-                SalesId = x.SalesPersonId,               
+                SalesId = x.SalesPersonId,
                 CdId = x.CdId,
                 PricePaid = x.PricePaid,
                 Date = x.Date
@@ -58,18 +58,25 @@ namespace Orders500.Controllers
         }
 
         // GET: api/<OrderController>/sales
-        [Route("sales")]
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<SalesPersonDropdownEntry>>> GetSalesPData()
+        [Route("sales/{storeID:int}")]
+        [HttpGet("{storeID}")]
+        public List<SalesPersonDropdownEntry> GetSalesPData(int storeID)
         {
             var context = new OrdersDBContext();
-            return await context.SalesPersonTables.Select(x => new SalesPersonDropdownEntry
-            {
-                last = x.LastName,
-                first = x.FirstName,
-                salesPersonId = x.SalesPersonId,
+            var salesPersonData = from employee in context.SalesPersonTables
+                                  where employee.StoreId == storeID
+                                  select new { employee.FirstName, employee.LastName, employee.SalesPersonId };
 
-            }).ToListAsync();
+            List<SalesPersonDropdownEntry> salesPersonList = new List<SalesPersonDropdownEntry>();
+            foreach (var employee in salesPersonData)
+            {
+                SalesPersonDropdownEntry temp = new SalesPersonDropdownEntry();
+                temp.first = employee.FirstName;
+                temp.last = employee.LastName;
+                temp.salesPersonId = employee.SalesPersonId;
+                salesPersonList.Add(temp);
+            }
+            return salesPersonList;
         }
 
         // GET: api/<OrderController>/preformance
@@ -97,22 +104,22 @@ namespace Orders500.Controllers
         // GET: api/<OrderController>/Highest
         [Route("highest")]
         [HttpGet]
-        public List <HighestSalesData> GetHighestSales()
+        public List<HighestSalesData> GetHighestSales()
         {
             List<HighestSalesData> highestSales = new List<HighestSalesData>();
             List<string> validCities = new List<string>();
 
             var context = new OrdersDBContext();
             var saleQ = (from order in context.OrdersTables
-                            where order.PricePaid > 13
-                            select order.Store.City);
+                         where order.PricePaid > 13
+                         select order.Store.City);
 
             //Change the query to a list for better indexing
-            var saleList = saleQ.ToList();            
-            
+            var saleList = saleQ.ToList();
+
             //Set up valid city for checking agaisnt the query list
             foreach (var city in saleQ)
-            {                
+            {
                 if (!validCities.Contains(city))
                 {
                     validCities.Add(city);
@@ -140,22 +147,38 @@ namespace Orders500.Controllers
                 highestSales.Add(temp);
             }
 
+            // Sort from highest to lowest
+            highestSales.Sort(delegate (HighestSalesData x, HighestSalesData y)
+            {
+                return x.salesNumber.CompareTo(y.salesNumber);
+            });
+            highestSales.Reverse();
+
             return highestSales;
 
         }
 
         // POST api/<OrderController>
-        [Route("post")]
-        [HttpPost]
-        public void Post([FromBody] newOrder oneOrder)
+        [Route("post/{storeId:int}/{salesPersonId:int}/{cdId:int}")]
+        [HttpPost("{storeId,salesPersonId,cdId}")]
+        public void Post(int storeId, int salesPersonId, int cdId)
         {
             var context = new OrdersDBContext();
 
+            // Get sale price
+            var salePriceQuery = from cd in context.CdTables
+                            where cd.CdId == cdId
+                            select cd.ListPrice;
+
+            // Get an integer value for the sale price
+            var salePriceList = salePriceQuery.ToList();
+            var salePrice = salePriceList[0];
+
             OrdersTable newOrder = new OrdersTable();
-            newOrder.StoreId = oneOrder.StoreId;
-            newOrder.SalesPersonId = oneOrder.SalesPersonId;
-            newOrder.CdId = oneOrder.CdId;
-            newOrder.PricePaid = oneOrder.PricePaid;
+            newOrder.StoreId = storeId;
+            newOrder.SalesPersonId = salesPersonId;
+            newOrder.CdId = cdId;
+            newOrder.PricePaid = salePrice;
             newOrder.Date = DateTime.Now.ToString();
 
             try

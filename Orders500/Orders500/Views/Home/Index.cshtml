@@ -1,8 +1,25 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+<h3>New Order</h3>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="my-form-group">
+    <label for="store">Choose Store:</label>
+    <select id="store-order" name="store"></select>
 </div>
+<div class="my-form-group">
+    <label for="employee-order">Choose Sales Person:</label>
+    <select id="employee-order" name="salesPerson"></select>
+</div>
+<div class="my-form-group">
+    <label for="employee-order">Choose CD:</label>
+    <select id="cd-order" name="cd"></select>
+</div>
+<button onclick="SubmitOrder()">Submit new Order</button>
+
+<br />
+<button id="performance-btn" onclick="GetPerformance()">Get performance of current store</button>
+<br /> <br />
+<button onclick="GetHighestSales()">Get the number of CDs above $13 sold by each store</button>
+<br /><br />
+<div id="output-div"></div>
